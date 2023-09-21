@@ -1,11 +1,11 @@
 import 'package:bookly_app/core/utils/app_router.dart';
-import 'package:bookly_app/core/utils/assets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomBookListViewItem extends StatelessWidget {
-  const CustomBookListViewItem({super.key});
-
+  const CustomBookListViewItem({super.key, required this.imageUrl});
+  final String imageUrl;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -14,12 +14,22 @@ class CustomBookListViewItem extends StatelessWidget {
       },
       child: AspectRatio(
         aspectRatio: 3 / 4,
-        child: ClipRRect(
-          clipBehavior: Clip.hardEdge,
-          borderRadius: BorderRadius.circular(10),
-          child: Image.asset(
-            AssetsData.testImage,
-            fit: BoxFit.fill,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            clipBehavior: Clip.hardEdge,
+            borderRadius: BorderRadius.circular(15),
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              fit: BoxFit.fill,
+              errorWidget: (context, url, error) {
+                return const Icon(
+                  Icons.error_outline_rounded,
+                  size: 50,
+                  color: Colors.red,
+                );
+              },
+            ),
           ),
         ),
       ),

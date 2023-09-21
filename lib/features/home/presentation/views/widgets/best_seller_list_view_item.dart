@@ -1,13 +1,18 @@
 import 'package:bookly_app/core/utils/app_router.dart';
-import 'package:bookly_app/core/utils/assets.dart';
 import 'package:bookly_app/core/utils/constants.dart';
 import 'package:bookly_app/core/utils/styles.dart';
+import 'package:bookly_app/features/home/data/models/book_model/book_model.dart';
 import 'package:bookly_app/features/home/presentation/views/widgets/book_rating.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class BestSellerListViewItem extends StatelessWidget {
-  const BestSellerListViewItem({super.key});
+  const BestSellerListViewItem({
+    super.key,
+    required this.bookModel,
+  });
+  final BookModel bookModel;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class BestSellerListViewItem extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.6,
             child: Text(
-              "Harry Potter and the Goblet of Fire",
+              bookModel.volumeInfo!.title!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: Styles.textStyle20.copyWith(fontFamily: KGtSectraFine),
@@ -49,7 +54,7 @@ class BestSellerListViewItem extends StatelessWidget {
             height: 5,
           ),
           Text(
-            "J.K Rwoling ",
+            bookModel.volumeInfo!.authors?[0],
             overflow: TextOverflow.ellipsis,
             style: Styles.textStyle14.copyWith(color: Colors.grey.shade400),
           ),
@@ -61,14 +66,22 @@ class BestSellerListViewItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "12.99 E",
+                  "Free",
+                  style:
+                      Styles.textStyle20.copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  " ",
                   style:
                       Styles.textStyle20.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const Spacer(
                   flex: 1,
                 ),
-                const BookRating(),
+                const BookRating(
+                  rating: 20,
+                  count: 50,
+                ),
               ],
             ),
           )
@@ -80,14 +93,11 @@ class BestSellerListViewItem extends StatelessWidget {
   AspectRatio itemImage() {
     return AspectRatio(
       aspectRatio: 3 / 4,
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.asset(
-            AssetsData.testImage,
-            fit: BoxFit.cover,
-          ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: CachedNetworkImage(
+          imageUrl: bookModel.volumeInfo!.imageLinks.thumbnail,
+          fit: BoxFit.fill,
         ),
       ),
     );

@@ -68,7 +68,10 @@ class BookListViewItem extends StatelessWidget {
                 const Spacer(
                   flex: 1,
                 ),
-                const BookRating(),
+                const BookRating(
+                  rating: 12,
+                  count: 200,
+                ),
               ],
             ),
           )

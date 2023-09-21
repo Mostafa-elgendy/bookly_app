@@ -14,9 +14,9 @@ class HomeRepoImpl extends HomeRepo {
   Future<Either<Failure, List<BookModel>>> fetchNewestBooks() async {
     try {
       var data = await apiService.get(
-        endPoint:
-            'volume?Filtering=free-ebooks&Sorting=newest&q=subject:Programming',
+        endPoint: 'volumes?Filtering=free-ebooks&Sorting=newest&q=Programming',
       );
+      print("Enter Newest");
       List<BookModel> books = [];
       for (var item in data["items"]) {
         books.add(BookModel.fromJson(item));
@@ -34,8 +34,9 @@ class HomeRepoImpl extends HomeRepo {
   Future<Either<Failure, List<BookModel>>> fetchFeaturedBooks() async {
     try {
       var data = await apiService.get(
-        endPoint: 'volume?Filtering=free-ebooks&q=subject:Programming',
+        endPoint: 'volumes?Filtering=free-ebooks&q=programming',
       );
+      print("dataa: ${data.length}");
       List<BookModel> books = [];
       for (var item in data["items"]) {
         books.add(BookModel.fromJson(item));

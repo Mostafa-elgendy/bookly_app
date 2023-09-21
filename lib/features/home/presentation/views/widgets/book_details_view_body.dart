@@ -22,7 +22,10 @@ class BookDetailsViewBody extends StatelessWidget {
               Padding(
                 padding:
                     EdgeInsets.only(left: width * 0.25, right: width * 0.15),
-                child: const CustomBookListViewItem(),
+                child: const CustomBookListViewItem(
+                  imageUrl:
+                      'http://books.google.com/books/content?id=tgfXEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+                ),
               ),
               Text(
                 "The Jungle Book",
@@ -43,7 +46,10 @@ class BookDetailsViewBody extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const BookRating(),
+              BookRating(
+                rating: 5,
+                count: 20,
+              ),
               const SizedBox(
                 height: 40,
               ),
